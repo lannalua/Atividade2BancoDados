@@ -92,8 +92,6 @@ app.post('/usuario', async (req, res) => {
     }
 });
 
-console.log(swaggerDocument);
-
 //url: http://localhost:3000/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
