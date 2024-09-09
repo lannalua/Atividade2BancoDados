@@ -1,0 +1,114 @@
+openapi: 3.0.0
+info:
+  title: API de Usuários
+  description: API para gerenciamento de usuários com operações CRUD.
+  version: 1.0.0
+paths:
+  /consultarusuario/{cpf}:
+    get:
+      summary: Consulta um usuário pelo CPF
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do usuário a ser consultado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cpf:
+                    type: string
+                  nome:
+                    type: string
+                  data_nascimento:
+                    type: string
+                    format: date
+        '404':
+          description: Usuário não encontrado
+        '500':
+          description: Erro ao buscar usuário
+
+  /listarusuarios:
+    get:
+      summary: Lista todos os usuários
+      responses:
+        '200':
+          description: Lista de usuários
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    cpf:
+                      type: string
+                    nome:
+                      type: string
+                    data_nascimento:
+                      type: string
+                      format: date
+        '500':
+          description: Erro ao listar usuários
+
+  /deleteusuario/{cpf}:
+    delete:
+      summary: Deleta um usuário pelo CPF
+      parameters:
+        - name: cpf
+          in: path
+          required: true
+          description: CPF do usuário a ser deletado
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuário deletado com sucesso
+        '404':
+          description: Usuário não encontrado
+        '500':
+          description: Erro ao deletar usuário
+
+  /usuario:
+    post:
+      summary: Cria um novo usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cpf:
+                  type: string
+                nome:
+                  type: string
+                data_nascimento:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+        '400':
+          description: Requisição inválida ou CPF já cadastrado
+        '500':
+          description: Erro ao criar usuário
+
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        cpf:
+          type: string
+        nome:
+          type: string
+        data_nascimento:
+          type: string
+          format: date
